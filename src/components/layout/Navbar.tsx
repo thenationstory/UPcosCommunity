@@ -175,18 +175,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center gap-1 min-w-0 flex-shrink">
+          <nav className="hidden xl:flex items-center gap-1.5 min-w-0 flex-shrink">
             {/* Feed Button */}
             <button
               id="nav-link-feed"
               onClick={() => setCurrentView('feed')}
-              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-[14.5px] lg:text-[15px] font-bold transition-all whitespace-nowrap ${
                 currentView === 'feed'
-                  ? 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold'
-                  : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold shadow-2xs'
+                  : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              <Sparkles className={`w-3.5 h-3.5 ${currentView === 'feed' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`} />
+              <Sparkles className={`w-4.5 h-4.5 ${currentView === 'feed' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`} />
               <span>{t.feed}</span>
             </button>
 
@@ -203,21 +203,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
                   setCurrentView('directory');
                   setIsDirectoryMenuOpen(prev => !prev);
                 }}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-[14.5px] lg:text-[15px] font-bold transition-all whitespace-nowrap ${
                   currentView === 'directory' || currentView === 'districts'
-                    ? 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold'
-                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold shadow-2xs'
+                    : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
-                <Users className={`w-3.5 h-3.5 ${currentView === 'directory' || currentView === 'districts' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`} />
+                <Users className={`w-4.5 h-4.5 ${currentView === 'directory' || currentView === 'districts' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`} />
                 <span>{t.directory}</span>
-                <ChevronDown className="w-3 h-3 text-slate-400 transition-transform group-hover:rotate-180" />
+                <ChevronDown className="w-4 h-4 text-slate-400 transition-transform group-hover:rotate-180" />
               </button>
 
               {/* Submenu shifted under Employee Directory */}
               {isDirectoryMenuOpen && (
-                <div className="absolute left-0 mt-1 w-64 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 py-1.5 z-50 text-xs animate-in fade-in zoom-in-95 duration-100">
-                  <div className="px-3 py-1.5 border-b border-slate-100 dark:border-slate-800 text-[10.5px] font-bold text-slate-400 uppercase tracking-wider">
+                <div className="absolute left-0 mt-1 w-72 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 py-2 z-50 text-sm animate-in fade-in zoom-in-95 duration-100">
+                  <div className="px-3.5 py-2 border-b border-slate-100 dark:border-slate-800 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                     {language === 'hi' ? 'कर्मचारी व जिला डायरेक्टरी' : 'Staff & District Directory'}
                   </div>
                   
@@ -226,15 +226,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
                       setCurrentView('directory');
                       setIsDirectoryMenuOpen(false);
                     }}
-                    className={`w-full px-3 py-2 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors ${
+                    className={`w-full px-3.5 py-2.5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors ${
                       currentView === 'directory' ? 'font-bold text-amber-600 bg-amber-50/60 dark:bg-amber-950/20' : 'text-slate-700 dark:text-slate-200'
                     }`}
                   >
-                    <div className="flex items-center gap-2">
-                      <Users className="w-4 h-4 text-amber-600" />
+                    <div className="flex items-center gap-2.5">
+                      <Users className="w-4.5 h-4.5 text-amber-600" />
                       <div>
-                        <p className="font-semibold leading-tight">{language === 'hi' ? 'समस्त कर्मचारी डायरेक्टरी' : 'All Staff Directory'}</p>
-                        <p className="text-[10px] text-slate-400 font-normal">{language === 'hi' ? 'पद, विभाग व नाम द्वारा खोजें' : 'Search by name, role & dept'}</p>
+                        <p className="font-semibold text-sm leading-tight">{language === 'hi' ? 'समस्त कर्मचारी डायरेक्टरी' : 'All Staff Directory'}</p>
+                        <p className="text-xs text-slate-400 font-normal">{language === 'hi' ? 'पद, विभाग व नाम द्वारा खोजें' : 'Search by name, role & dept'}</p>
                       </div>
                     </div>
                   </button>
@@ -246,18 +246,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
                       setCurrentView('districts');
                       setIsDirectoryMenuOpen(false);
                     }}
-                    className={`w-full px-3 py-2 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border-t border-slate-100 dark:border-slate-800/60 ${
+                    className={`w-full px-3.5 py-2.5 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border-t border-slate-100 dark:border-slate-800/60 ${
                       currentView === 'districts' ? 'font-bold text-amber-600 bg-amber-50/60 dark:bg-amber-950/20' : 'text-slate-700 dark:text-slate-200'
                     }`}
                   >
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-orange-600" />
+                    <div className="flex items-center gap-2.5">
+                      <MapPin className="w-4.5 h-4.5 text-orange-600" />
                       <div>
-                        <p className="font-semibold leading-tight">{language === 'hi' ? '75 जिलेवार डायरेक्टरी' : '75 Districts Directory'}</p>
-                        <p className="text-[10px] text-slate-400 font-normal">{language === 'hi' ? 'जिलेवार कम्युनिटी व कर्मचारी' : 'District community & staff'}</p>
+                        <p className="font-semibold text-sm leading-tight">{language === 'hi' ? '75 जिलेवार डायरेक्टरी' : '75 Districts Directory'}</p>
+                        <p className="text-xs text-slate-400 font-normal">{language === 'hi' ? 'जिलेवार कम्युनिटी व कर्मचारी' : 'District community & staff'}</p>
                       </div>
                     </div>
-                    <span className="text-[10px] px-1.5 py-0.2 rounded font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+                    <span className="text-xs px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">
                       75
                     </span>
                   </button>
@@ -269,28 +269,28 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
             <button
               id="nav-link-jobs"
               onClick={() => setCurrentView('blog-jobs')}
-              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-[14.5px] lg:text-[15px] font-bold transition-all whitespace-nowrap ${
                 currentView === 'blog-jobs' || currentView === 'jobs' || currentView === 'news'
-                  ? 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold'
-                  : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold shadow-2xs'
+                  : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              <Newspaper className={`w-3.5 h-3.5 ${currentView === 'blog-jobs' || currentView === 'jobs' || currentView === 'news' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`} />
+              <Newspaper className={`w-4.5 h-4.5 ${currentView === 'blog-jobs' || currentView === 'jobs' || currentView === 'news' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`} />
               <span>{t.newsJobs}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
             </button>
 
             {/* Q&A Button */}
             <button
               id="nav-link-qa"
               onClick={() => setCurrentView('qa')}
-              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-[14.5px] lg:text-[15px] font-bold transition-all whitespace-nowrap ${
                 currentView === 'qa'
-                  ? 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold'
-                  : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-amber-500/10 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold shadow-2xs'
+                  : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              <HelpCircle className={`w-3.5 h-3.5 ${currentView === 'qa' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`} />
+              <HelpCircle className={`w-4.5 h-4.5 ${currentView === 'qa' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`} />
               <span>{t.qa}</span>
             </button>
           </nav>
@@ -376,28 +376,28 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
                       </span>
                     )}
                   </div>
-                  <span className="hidden md:inline-block font-semibold text-xs text-slate-800 dark:text-slate-200 max-w-[85px] truncate">
+                  <span className="hidden md:inline-block font-bold text-sm text-slate-800 dark:text-slate-200 max-w-[95px] truncate">
                     {currentUser.name.split(' ')[0]}
                   </span>
-                  <ChevronDown className="hidden md:inline-block w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                  <ChevronDown className="hidden md:inline-block w-4 h-4 text-slate-400 flex-shrink-0" />
                 </button>
 
                 {/* Dropdown Menu */}
                 {isUserMenuOpen && renderUserMenuDropdown()}
               </div>
             ) : (
-              <div className="hidden sm:flex items-center gap-1.5 sm:gap-2">
+              <div className="hidden sm:flex items-center gap-2">
                 <button
                   onClick={() => setAuthModalType('login')}
                   id="nav-login-btn"
-                  className="text-xs font-bold px-2 sm:px-3 py-1.5 sm:py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors whitespace-nowrap min-h-[36px]"
+                  className="text-[13.5px] lg:text-sm font-bold px-3 sm:px-3.5 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors whitespace-nowrap min-h-[38px]"
                 >
                   {t.login}
                 </button>
                 <button
                   onClick={() => setAuthModalType('register')}
                   id="nav-register-btn"
-                  className="text-xs font-bold px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-xs transition-all whitespace-nowrap min-h-[36px]"
+                  className="text-[13.5px] lg:text-sm font-bold px-3.5 sm:px-4.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-xs transition-all whitespace-nowrap min-h-[38px]"
                 >
                   {t.register}
                 </button>
@@ -533,13 +533,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
                     setCurrentView(item.id);
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold min-h-[44px] transition-colors ${
+                  className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-[13.5px] font-bold min-h-[44px] transition-colors ${
                     isActive
                       ? 'bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold border border-amber-400/30'
                       : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
                   }`}
                 >
-                  <Icon className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                  <Icon className="w-4.5 h-4.5 text-amber-600 flex-shrink-0" />
                   <span className="truncate">{item.label}</span>
                 </button>
               );
@@ -551,13 +551,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
                 setCurrentView('documents');
                 setIsMobileMenuOpen(false);
               }}
-              className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold min-h-[44px] transition-colors ${
+              className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-[13.5px] font-bold min-h-[44px] transition-colors ${
                 currentView === 'documents'
                   ? 'bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold border border-amber-400/30'
                   : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
-              <FileText className="w-4 h-4 text-amber-600 flex-shrink-0" />
+              <FileText className="w-4.5 h-4.5 text-amber-600 flex-shrink-0" />
               <span className="truncate">{language === 'hi' ? 'शासनादेश व प्रपत्र' : 'Orders & Docs'}</span>
             </button>
 
@@ -568,13 +568,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
                   setCurrentView('admin');
                   setIsMobileMenuOpen(false);
                 }}
-                className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold min-h-[44px] transition-colors ${
+                className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-[13.5px] font-bold min-h-[44px] transition-colors ${
                   currentView === 'admin'
                     ? 'bg-amber-500/15 text-amber-800 dark:text-amber-300 font-bold border border-amber-400/30'
                     : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
-                <Shield className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                <Shield className="w-4.5 h-4.5 text-amber-600 flex-shrink-0" />
                 <span className="truncate">{language === 'hi' ? 'एडमिन पैनल' : 'Admin Panel'}</span>
               </button>
             )}
