@@ -103,10 +103,13 @@ export const LandingPage: React.FC = () => {
         <div className="w-full max-w-[1720px] mx-auto px-2 sm:px-4 lg:px-6 text-center">
           
           {/* Tagline Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 text-xs sm:text-sm font-semibold mb-4 sm:mb-6 border border-amber-300/60 shadow-xs">
+          <div 
+            id="hero-tagline-badge"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 text-xs sm:text-sm font-semibold mb-4 sm:mb-6 border border-amber-300/60 shadow-xs"
+          >
             <span className="w-2 h-2 rounded-full bg-amber-600 animate-ping" />
-            <span className="font-serif text-[11px] sm:text-xs">
-              {language === 'hi' ? 'उत्तर प्रदेश आउटसोर्स कर्मचारियों की अपनी डिजिटल कम्युनिटी' : 'Official Statewide Outsource Employee Network'}
+            <span className="font-serif text-xs sm:text-sm font-semibold">
+              Unofficial Statewide Outsource Employee Network
             </span>
           </div>
 
