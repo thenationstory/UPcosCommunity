@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { MOCK_JOBS, MOCK_NEWS, JobVacancy, NewsArticle } from '../../data/mockNewsAndJobs';
 import { UP_DISTRICTS } from '../../data/constants';
+import { JobFullPageView } from './JobFullPageView';
+import { NewsFullPageView } from './NewsFullPageView';
 import { 
   Briefcase, Newspaper, Search, Filter, Calendar, MapPin, 
   Building2, ExternalLink, FileText, CheckCircle2, AlertTriangle, 
@@ -74,6 +76,60 @@ export const NewsAndJobsView: React.FC = () => {
   const toggleSaveNews = (id: string) => {
     setSavedNewsIds(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]);
   };
+
+  const handleOpenJob = (job: JobVacancy) => {
+    setSelectedJob(job);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOpenNews = (article: NewsArticle) => {
+    setSelectedNews(article);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // FULL PAGE VIEW FOR SELECTED JOB
+  if (selectedJob) {
+    return (
+      <JobFullPageView
+        job={selectedJob}
+        onBack={() => {
+          setSelectedJob(null);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onSelectJob={(job) => {
+          setSelectedJob(job);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        isSaved={savedJobIds.includes(selectedJob.id)}
+        onToggleSave={() => toggleSaveJob(selectedJob.id)}
+        onShare={() => handleCopyLink(selectedJob.id)}
+        isCopied={copiedId === selectedJob.id}
+        allJobs={MOCK_JOBS}
+      />
+    );
+  }
+
+  // FULL PAGE VIEW FOR SELECTED NEWS ARTICLE
+  if (selectedNews) {
+    return (
+      <NewsFullPageView
+        article={selectedNews}
+        onBack={() => {
+          setSelectedNews(null);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onSelectNews={(article) => {
+          setSelectedNews(article);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        isSaved={savedNewsIds.includes(selectedNews.id)}
+        onToggleSave={() => toggleSaveNews(selectedNews.id)}
+        onShare={() => handleCopyLink(selectedNews.id)}
+        isCopied={copiedId === selectedNews.id}
+        allNews={MOCK_NEWS}
+      />
+    );
+  }
 
   return (
     <div className="w-full max-w-[1720px] mx-auto px-2 sm:px-4 lg:px-6 py-3 sm:py-5 space-y-4 sm:space-y-6">
@@ -310,7 +366,10 @@ export const NewsAndJobsView: React.FC = () => {
 
                     {/* Job Title */}
                     <div>
-                      <h3 className="font-bold text-base text-slate-900 dark:text-white leading-snug">
+                      <h3 
+                        onClick={() => handleOpenJob(job)}
+                        className="font-bold text-base text-slate-900 dark:text-white leading-snug cursor-pointer hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                      >
                         {language === 'hi' ? job.titleHi : job.title}
                       </h3>
                       <p className="text-xs text-amber-700 dark:text-amber-400 font-semibold mt-0.5 flex items-center gap-1">
@@ -359,7 +418,7 @@ export const NewsAndJobsView: React.FC = () => {
                   {/* Actions */}
                   <div className="pt-3.5 mt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between gap-2">
                     <button
-                      onClick={() => setSelectedJob(job)}
+                      onClick={() => handleOpenJob(job)}
                       className="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 flex items-center gap-1 transition-colors"
                     >
                       <span>{language === 'hi' ? 'पूरा विवरण देखें' : 'View Details'}</span>
@@ -433,7 +492,7 @@ export const NewsAndJobsView: React.FC = () => {
 
                     {/* Headline */}
                     <h3 
-                      onClick={() => setSelectedNews(article)}
+                      onClick={() => handleOpenNews(article)}
                       className="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-snug cursor-pointer hover:text-orange-600 transition-colors"
                     >
                       {language === 'hi' ? article.titleHi : article.title}
@@ -466,7 +525,7 @@ export const NewsAndJobsView: React.FC = () => {
                   <div className="pt-3 mt-3 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between text-xs">
                     <span className="text-[11px] text-slate-400">{article.readTime} पठन</span>
                     <button
-                      onClick={() => setSelectedNews(article)}
+                      onClick={() => handleOpenNews(article)}
                       className="font-bold text-orange-600 dark:text-orange-400 hover:underline flex items-center gap-1"
                     >
                       <span>पूरा पढ़ें</span>
@@ -477,177 +536,6 @@ export const NewsAndJobsView: React.FC = () => {
                 </article>
               );
             })}
-          </div>
-        </div>
-      )}
-
-      {/* MODAL: JOB DETAILS */}
-      {selectedJob && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-2xl space-y-4 my-auto">
-            
-            <div className="flex items-start justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-              <div>
-                <span className="px-2 py-0.5 rounded text-[10.5px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">
-                  {selectedJob.totalPosts} पद (Vacancies)
-                </span>
-                <h3 className="font-bold text-lg text-slate-900 dark:text-white mt-1">
-                  {language === 'hi' ? selectedJob.titleHi : selectedJob.title}
-                </h3>
-                <p className="text-xs text-amber-700 dark:text-amber-400 font-semibold">
-                  {language === 'hi' ? selectedJob.departmentHi : selectedJob.department}
-                </p>
-              </div>
-              <button 
-                onClick={() => setSelectedJob(null)}
-                className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-3 text-xs leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 grid grid-cols-2 gap-2.5">
-                <div>
-                  <span className="text-slate-400 block text-[10px]">मासिक मानदेय (Salary)</span>
-                  <span className="font-bold text-slate-900 dark:text-white text-xs">{selectedJob.salary}</span>
-                </div>
-                <div>
-                  <span className="text-slate-400 block text-[10px]">अंतिम तिथि (Last Date)</span>
-                  <span className="font-bold text-rose-600">{selectedJob.lastDate}</span>
-                </div>
-                <div>
-                  <span className="text-slate-400 block text-[10px]">आयु सीमा (Age Limit)</span>
-                  <span className="font-semibold text-slate-800 dark:text-slate-200">{selectedJob.ageLimit}</span>
-                </div>
-                <div>
-                  <span className="text-slate-400 block text-[10px]">आउटसोर्सिंग एजेंसी</span>
-                  <span className="font-semibold text-slate-800 dark:text-slate-200">{selectedJob.outsourcingAgency}</span>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white mb-1">विस्तृत योग्यता (Eligibility Criteria)</h4>
-                <p className="text-slate-700 dark:text-slate-300 bg-amber-50/60 dark:bg-amber-950/20 p-2.5 rounded-lg border border-amber-200/60">
-                  {language === 'hi' ? selectedJob.qualificationHi : selectedJob.qualification}
-                </p>
-              </div>
-
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white mb-1">कार्य विवरण (Job Profile)</h4>
-                <p className="text-slate-700 dark:text-slate-300">
-                  {language === 'hi' ? selectedJob.descriptionHi : selectedJob.description}
-                </p>
-              </div>
-
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white mb-1">आवश्यक दस्तावेज (Required Documents)</h4>
-                <ul className="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-300">
-                  {selectedJob.requiredDocuments.map((doc, idx) => (
-                    <li key={idx}>{doc}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white mb-1">चयनित जनपद (Districts)</h4>
-                <div className="flex flex-wrap gap-1">
-                  {selectedJob.districts.map((d, idx) => (
-                    <span key={idx} className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[11px]">
-                      {d}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
-              <button
-                onClick={() => setSelectedJob(null)}
-                className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 hover:bg-slate-100"
-              >
-                बंद करें
-              </button>
-              <a
-                href={selectedJob.portalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-xs"
-              >
-                <span>सेवायोजन पोर्टल पर ऑनलाइन आवेदन करें</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-
-          </div>
-        </div>
-      )}
-
-      {/* MODAL: NEWS ARTICLE */}
-      {selectedNews && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-2xl space-y-4 my-auto">
-            
-            <div className="flex items-start justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-              <div>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300">
-                  {selectedNews.category === 'salary_order' ? 'शासनादेश' : 'विभागीय बुलेटिन'}
-                </span>
-                <h3 className="font-bold text-lg text-slate-900 dark:text-white mt-1">
-                  {language === 'hi' ? selectedNews.titleHi : selectedNews.title}
-                </h3>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  {selectedNews.departmentHi} • {selectedNews.publishedDate}
-                </p>
-              </div>
-              <button 
-                onClick={() => setSelectedNews(null)}
-                className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-3 text-xs leading-relaxed max-h-[60vh] overflow-y-auto pr-1">
-              {selectedNews.orderNumber && (
-                <div className="p-2.5 rounded-lg bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 font-bold text-orange-900 dark:text-orange-200">
-                  {selectedNews.orderNumber}
-                </div>
-              )}
-
-              <p className="text-slate-800 dark:text-slate-200 whitespace-pre-line leading-relaxed font-normal">
-                {language === 'hi' ? selectedNews.contentHi : selectedNews.content}
-              </p>
-
-              {selectedNews.documentName && (
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <FileText className="w-5 h-5 text-red-600" />
-                    <div>
-                      <p className="font-bold text-slate-900 dark:text-white text-xs">{selectedNews.documentName}</p>
-                      <p className="text-[10px] text-slate-400">{selectedNews.documentSize || 'PDF Document'}</p>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => alert('डाउनलोडिंग शासनादेश...')}
-                    className="px-3 py-1.5 rounded-lg bg-amber-600 text-white font-bold text-xs flex items-center gap-1"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>डाउनलोड</span>
-                  </button>
-                </div>
-              )}
-            </div>
-
-            <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end">
-              <button
-                onClick={() => setSelectedNews(null)}
-                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs"
-              >
-                बंद करें
-              </button>
-            </div>
-
           </div>
         </div>
       )}
