@@ -1,0 +1,6 @@
+{
+  "name": "UP Outsource Seva Nigam",
+  "description": "उत्तर प्रदेश आउटसोर्स कर्मचारियों की अपनी डिजिटल कम्युनिटी - UPOSN Employee Community Platform",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
